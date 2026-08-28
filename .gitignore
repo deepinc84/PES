@@ -1,0 +1,9 @@
+node_modules/
+.next/
+.vercel/
+*.log
+.DS_Store
+
+# Archive recovery response cache
+data/archive/cache/*
+!data/archive/cache/.gitkeep
