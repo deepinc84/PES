@@ -1,0 +1,15 @@
+import Link from 'next/link'
+
+export function Logo() { return <Link className="logo" href="/" aria-label="Platinum Electrical Services home"><span className="logo-icon">P</span><span><b>PLATINUM</b><small>ELECTRICAL SERVICES</small></span></Link> }
+
+export function Header() { return <header className="site-header"><div className="top-strip"><div className="wrap">Residential <i>•</i> Commercial <i>•</i> Industrial <Link href="/electrician-services/24h-emergency-electrical-services/">Emergency electrical service</Link></div></div><div className="wrap nav-row"><Logo /><nav aria-label="Primary navigation"><Link href="/">Home</Link><Link href="/our-services/">Services</Link><Link href="/residential/">Residential</Link><Link href="/calgary-electrician/electrician-in-calgary/">Calgary Electrician</Link><Link href="/contact/">Contact</Link></nav><Link className="nav-cta" href="/contact/">Request service</Link></div></header> }
+
+export function Footer() { return <footer><div className="wrap footer-grid"><div><Logo /><p>Electrical solutions for residential, commercial and industrial needs in Calgary, Alberta.</p></div><div><h2>Services</h2><Link href="/residential/">Residential</Link><Link href="/our-services/#commercial">Commercial</Link><Link href="/our-services/#industrial">Industrial</Link><Link href="/electrician-services/24h-emergency-electrical-services/">Emergency</Link></div><div><h2>Company</h2><Link href="/calgary-electrician/electrician-in-calgary/">Calgary Electrician</Link><Link href="/our-services/">All Services</Link><Link href="/contact/">Contact</Link></div></div><div className="wrap copyright"><span>© {new Date().getFullYear()} Platinum Electrical Services</span><span>Calgary, Alberta</span></div></footer> }
+
+export function ServiceCard({ title, description, href, icon='↗' }) { return <article className="service-card"><span className="service-icon">{icon}</span><h3>{title}</h3><p>{description}</p><Link href={href} aria-label={`Learn about ${title}`}>Learn more <span>→</span></Link></article> }
+
+export function Breadcrumbs({ items }) { return <nav className="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><Link href="/">Home</Link></li>{items.map((item,i)=><li key={item.label}>{item.href && i < items.length-1 ? <Link href={item.href}>{item.label}</Link> : <span aria-current={i===items.length-1?'page':undefined}>{item.label}</span>}</li>)}</ol></nav> }
+
+export function PageHero({ eyebrow, title, children }) { return <section className="page-hero"><div className="wrap"><p className="eyebrow">{eyebrow}</p><h1>{title}</h1>{children && <p>{children}</p>}</div></section> }
+
+export function Cta() { return <section className="cta"><div className="wrap"><div><p className="eyebrow">Talk with our team</p><h2>Have an electrical project or service need?</h2><p>Tell us about the property, the issue and the timing. We’ll help identify the right next step.</p></div><Link className="button light" href="/contact/">Contact Platinum Electrical</Link></div></section> }

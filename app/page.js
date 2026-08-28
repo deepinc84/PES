@@ -1,76 +1,53 @@
-'use client'
+import Link from 'next/link'
+import { Cta, ServiceCard } from '@/components/site'
+import { coreServices } from '@/data/site-content'
 
-import { useState } from 'react'
-
-const makeIcon = glyph => function Icon({ size = 18, className = '' }) { return <span className={`glyph ${className}`} style={{fontSize: size}}>{glyph}</span> }
-const Menu=makeIcon('☰'), BrandGithub=makeIcon('●'), ChevronDown=makeIcon('⌄'), Code2=makeIcon('‹›'), CircleDot=makeIcon('⊙'), GitPullRequest=makeIcon('⑂'), Gauge=makeIcon('◔'), PlayCircle=makeIcon('▶'), Table=makeIcon('▦'), BookOpen=makeIcon('▥'), ShieldAlert=makeIcon('♢'), ChartNoAxesColumnIncreasing=makeIcon('⌁'), Settings=makeIcon('⚙'), Search=makeIcon('⌕'), Users=makeIcon('♙'), Plus=makeIcon('+'), CircleDotDashed=makeIcon('◉'), GitBranch=makeIcon('⑂'), Monitor=makeIcon('▱'), Inbox=makeIcon('▰'), Pin=makeIcon('⌖'), Eye=makeIcon('◉'), Star=makeIcon('☆'), UserPlus=makeIcon('♧'), Copy=makeIcon('▣'), Check=makeIcon('✓')
-
-const nav = [
-  [Code2, 'Code'], [CircleDot, 'Issues'], [GitPullRequest, 'Pull requests'],
-  [Gauge, 'Agents'], [PlayCircle, 'Actions'], [Table, 'Projects'],
-  [BookOpen, 'Wiki'], [ShieldAlert, 'Security and quality'],
-  [ChartNoAxesColumnIncreasing, 'Insights'], [Settings, 'Settings']
-]
-
-function IconButton({ children, wide = false }) {
-  return <button className={`icon-button ${wide ? 'wide' : ''}`}>{children}</button>
-}
-
-function StatButton({ icon: Icon, label, value, menu = true }) {
-  return <div className="stat-group"><button><Icon size={17}/><span>{label}</span>{value !== undefined && <b>{value}</b>}</button>{menu && <button className="drop"><ChevronDown size={14}/></button>}</div>
-}
-
-function CopyButton({ value }) {
-  const [copied, setCopied] = useState(false)
-  return <button className="copy" aria-label="Copy" onClick={() => { navigator.clipboard?.writeText(value); setCopied(true); setTimeout(() => setCopied(false), 1200) }}>{copied ? <Check size={18}/> : <Copy size={18}/>}</button>
+export const metadata = {
+  title: 'Calgary Electrician & Electrical Contractor',
+  description: 'Platinum Electrical Services provides residential, commercial and industrial electrical services in Calgary, including repairs, upgrades, maintenance and emergency response.',
+  alternates: { canonical: '/' },
 }
 
 export default function Home() {
-  const clone = 'https://github.com/deepinc84/PES.git'
-  return <main>
-    <header>
-      <div className="topbar">
-        <div className="identity">
-          <IconButton><Menu size={20}/></IconButton><BrandGithub className="github" size={33} fill="currentColor"/>
-          <span className="owner">deepinc84</span><span className="slash">/</span><strong>PES</strong><ChevronDown size={15}/>
+  return <>
+    <section className="hero">
+      <div className="wrap hero-grid">
+        <div>
+          <p className="eyebrow">Platinum Electrical Services · Calgary, Alberta</p>
+          <h1>Electrical work built around safety, clarity and lasting results.</h1>
+          <p className="hero-copy">A Calgary electrical contractor for homes, commercial facilities and industrial operations—from everyday electrical repairs to complex maintenance and equipment work.</p>
+          <div className="button-row"><Link className="button primary" href="/contact/">Request service</Link><Link className="button ghost" href="/our-services/">Explore services</Link></div>
         </div>
-        <div className="toolbar">
-          <button className="search"><Search size={18}/><span>Type <kbd>/</kbd> to search</span></button>
-          <IconButton wide><Users size={17}/><ChevronDown size={14}/></IconButton>
-          <i></i><IconButton wide><Plus size={19}/><ChevronDown size={14}/></IconButton>
-          <IconButton><CircleDotDashed size={19}/></IconButton><IconButton><GitPullRequest size={19}/></IconButton>
-          <IconButton><Monitor size={18}/></IconButton><IconButton><Inbox size={18}/></IconButton>
-          <div className="avatar">▦</div>
-        </div>
+        <aside className="hero-panel" aria-label="Service overview">
+          <span>Electrical support for</span>
+          <strong>Residential</strong><strong>Commercial</strong><strong>Industrial</strong>
+          <Link href="/electrician-services/24h-emergency-electrical-services/">Need urgent electrical help? →</Link>
+        </aside>
       </div>
-      <nav>{nav.map(([Icon, label], i) => <button className={i === 0 ? 'active' : ''} key={label}><Icon size={17}/><span>{label}</span>{label === 'Pull requests' && <em>0</em>}</button>)}</nav>
-    </header>
-
-    <section className="repo-shell">
-      <div className="repo-line">
-        <div className="repo-title"><div className="repo-avatar">▦</div><h1>PES</h1><span>Public</span></div>
-        <div className="stats"><StatButton icon={Pin} label="Pin" menu={false}/><StatButton icon={Eye} label="Watch" value="0"/><StatButton icon={GitBranch} label="Fork" value="0"/><StatButton icon={Star} label="Star" value="0"/></div>
-      </div>
-
-      <div className="cards">
-        <article><Monitor size={23}/><h2>Start coding with Codespaces</h2><p>Add a README file and start coding in a secure, configurable, and dedicated<br className="desktop"/> development environment.</p><button>Create a codespace</button></article>
-        <article><UserPlus size={25}/><h2>Add collaborators to this repository</h2><p>Search for people using their GitHub username or email address.</p><button>Invite collaborators</button></article>
-      </div>
-
-      <section className="quick">
-        <div className="quick-head">
-          <h2>Quick setup — if you’ve done this kind of thing before</h2>
-          <div className="clone-row"><button className="desktop-setup"><Monitor size={16}/> Set up in Desktop</button><span>or</span><div className="protocol"><button className="selected">HTTPS</button><button>SSH</button></div><div className="url"><code>{clone}</code><CopyButton value={clone}/></div></div>
-          <p>Get started by <a>creating a new file</a> or <a>uploading an existing file</a>. We recommend every repository include a <a>README</a>, <a>LICENSE</a>, and <a>.gitignore</a>.</p>
-        </div>
-        <Command title="…or create a new repository on the command line" lines={['echo "# PES" >> README.md','git init','git add README.md','git commit -m "first commit"','git branch -M main','git remote add origin https://github.com/deepinc84/PES.git','git push -u origin main']}/>
-        <Command title="…or push an existing repository from the command line" lines={['git remote add origin https://github.com/deepinc84/PES.git','git branch -M main','git push -u origin main']}/>
-      </section>
     </section>
-  </main>
-}
 
-function Command({ title, lines }) {
-  const value = lines.join('\n')
-  return <div className="command"><h2>{title}</h2><div className="codebox"><code>{lines.map(line => <span key={line}>{line}</span>)}</code><CopyButton value={value}/></div></div>
+    <section className="section wrap">
+      <div className="section-heading"><div><p className="eyebrow dark">Core services</p><h2>Practical expertise for every kind of property</h2></div><Link className="text-link" href="/our-services/">View all services →</Link></div>
+      <div className="card-grid">{coreServices.map(service => <ServiceCard key={service.href} {...service} />)}</div>
+    </section>
+
+    <section className="band"><div className="wrap capability-grid">
+      <article><span>01</span><h2>Residential</h2><p>Repairs, panel and service upgrades, lighting, wiring, hot tubs, surge protection and renovation electrical work.</p><Link href="/residential/">Residential services →</Link></article>
+      <article><span>02</span><h2>Commercial</h2><p>Dependable installations, lighting, inspections, life-safety systems and planned electrical maintenance.</p><Link href="/our-services/#commercial">Commercial services →</Link></article>
+      <article><span>03</span><h2>Industrial</h2><p>Mechanical and electrical maintenance, thermography, CNC support, automation and equipment troubleshooting.</p><Link href="/our-services/#industrial">Industrial services →</Link></article>
+    </div></section>
+
+    <section className="section wrap split">
+      <div className="emergency-mark" aria-hidden="true">24<span>HR</span></div>
+      <div><p className="eyebrow dark">Emergency electrical service</p><h2>When an electrical problem cannot wait</h2><p>Unexpected outages, unsafe electrical conditions and urgent equipment problems need a focused response. Our historical emergency service page remains the direct destination for urgent-service information.</p><Link className="button dark" href="/electrician-services/24h-emergency-electrical-services/">Emergency service details</Link></div>
+    </section>
+
+    <section className="section offwhite"><div className="wrap why-grid">
+      <div><p className="eyebrow dark">Why Platinum</p><h2>Solutions guided by the job—not a one-size-fits-all package</h2></div>
+      <div className="checks"><p><b>Clear scope</b><span>We begin by understanding the site, the issue and the outcome you need.</span></p><p><b>Broad capability</b><span>Support across residential, commercial and industrial electrical systems.</span></p><p><b>Safety-minded work</b><span>Thoughtful planning and workmanship are central to every service.</span></p></div>
+    </div></section>
+
+    <section className="section wrap calgary"><div><p className="eyebrow dark">Local electrical services</p><h2>Serving Calgary electrical needs</h2><p>Platinum Electrical Services supports property owners, facility teams and businesses across Calgary. Visit our dedicated Calgary electrician page for an overview of local capabilities.</p><Link className="text-link" href="/calgary-electrician/electrician-in-calgary/">Calgary electrician services →</Link></div><div className="line-art" aria-hidden="true"><span>YYC</span></div></section>
+    <Cta />
+  </>
 }
