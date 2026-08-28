@@ -1,0 +1,17 @@
+{
+  "attemptedAt": "2026-08-28T21:54:33.455Z",
+  "failures": [
+    {
+      "stage": "CDX discovery",
+      "pattern": "pt-electrical.com/*",
+      "url": "https://web.archive.org/cdx/search/cdx?url=pt-electrical.com%2F*&output=json&from=2020&to=2023&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest",
+      "error": "Failed after 3 attempts: https://web.archive.org/cdx/search/cdx?url=pt-electrical.com%2F*&output=json&from=2020&to=2023&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest: fetch failed"
+    },
+    {
+      "stage": "CDX discovery",
+      "pattern": "www.pt-electrical.com/*",
+      "url": "https://web.archive.org/cdx/search/cdx?url=www.pt-electrical.com%2F*&output=json&from=2020&to=2023&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest",
+      "error": "Failed after 3 attempts: https://web.archive.org/cdx/search/cdx?url=www.pt-electrical.com%2F*&output=json&from=2020&to=2023&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest: fetch failed"
+    }
+  ]
+}

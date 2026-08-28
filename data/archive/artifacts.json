@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "artifacts": [
+    {
+      "id": "user-supplied-historical-stylesheet",
+      "type": "CSS",
+      "provenance": "Directly supplied by the Platinum Electrical Services site owner in the repository task on 2026-08-28",
+      "recoveryStatus": "SOURCE PROVIDED — ANALYZED",
+      "classification": "HISTORICAL SITE SOURCE",
+      "likelyRole": "Legacy campaign or landing-page stylesheet",
+      "evidence": [
+        "Uses Open Sans for body copy and a legacy Font Awesome webfont declaration",
+        "Defines vanImage and contactBox header treatments",
+        "Defines red and grey promotional strips",
+        "Defines a three-column content area with leftPanel, middlePanel, and callSec",
+        "Defines a quote/contact form, testimonial area, numbered steps, about section, and grey footer",
+        "Uses fixed desktop/tablet/mobile breakpoint ranges"
+      ],
+      "designTokens": {
+        "primaryRed": ["#dd2027", "#d31010"],
+        "neutralGrey": ["#6d6e71", "#6a6a6a"],
+        "darkText": ["#000", "#333333"],
+        "white": "#fff",
+        "legacyRatingYellow": "#fdd003",
+        "bodyTypography": "15px/22px Open Sans, sans-serif"
+      },
+      "referencedAssets": [
+        {"path":"../fonts/fontawesome-webfont.eot","classification":"LEGACY FONT ASSET"},
+        {"path":"../fonts/fontawesome-webfont.woff","classification":"LEGACY FONT ASSET"},
+        {"path":"../fonts/fontawesome-webfont.ttf","classification":"LEGACY FONT ASSET"},
+        {"path":"../fonts/fontawesome-webfont.svg","classification":"LEGACY FONT ASSET"},
+        {"path":"../images/tick.png","classification":"UNKNOWN — MANUAL REVIEW"}
+      ],
+      "contentOrComponentClues": [
+        "Branded service-van image",
+        "Prominent telephone/contact block",
+        "Small red action button",
+        "Red and grey message strips",
+        "Service-information panel",
+        "Quote/contact form with name, telephone, message, and submit controls",
+        "Testimonials with star icons",
+        "Numbered process steps",
+        "About copy and bullet list"
+      ],
+      "productionRecommendation": "REFERENCE ONLY — do not import this stylesheet into the Next.js application. Preserve its red/grey identity, van imagery, contact intent, and structured service messaging while rejecting its dated fixed breakpoints, oversized form submit control, dotted borders, heavy rounded panels, legacy font files, and unverified testimonial treatment.",
+      "notes": "The stylesheet contains no page copy, URLs, titles, metadata, phone number, or image filename for the van itself. It is evidence of historical presentation and component hierarchy, not evidence for factual business claims."
+    }
+  ]
+}
