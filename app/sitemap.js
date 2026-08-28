@@ -1,0 +1,2 @@
+import {servicePages} from '@/data/site-content';const base='https://pt-electrical.com';
+export default function sitemap(){const routes=['','/our-services/','/residential/','/contact/','/calgary-electrician/electrician-in-calgary/','/electrician-services/24h-emergency-electrical-services/',...Object.keys(servicePages).map(x=>`/electrician-services/${x}/`)];return routes.map(url=>({url:base+url,changeFrequency:url===''?'weekly':'monthly',priority:url===''?1:(url==='/our-services/'?.9:.7)}))}
