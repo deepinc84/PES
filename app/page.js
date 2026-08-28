@@ -38,7 +38,7 @@ export default function Home() {
     </div></section>
 
     <section className="section wrap split">
-      <div className="emergency-mark" aria-hidden="true">24<span>HR</span></div>
+      <div className="emergency-mark" aria-hidden="true">PES<span>RESPONSE</span></div>
       <div><p className="eyebrow dark">Emergency electrical service</p><h2>When an electrical problem cannot wait</h2><p>Unexpected outages, unsafe electrical conditions and urgent equipment problems need a focused response. Our historical emergency service page remains the direct destination for urgent-service information.</p><Link className="button dark" href="/electrician-services/24h-emergency-electrical-services/">Emergency service details</Link></div>
     </section>
 

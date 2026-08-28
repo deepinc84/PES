@@ -4,6 +4,8 @@
 
 This audit uses the protected routes, historical service inventory, approximate backlink totals, spam examples, and taxonomy examples supplied with the rebuild brief. The referenced `seo architecture.xlsx` attachment was **not present in the repository or mounted workspace at implementation time**. Accordingly, decisions that depend on row-level referring-domain or anchor analysis are explicitly held for manual review rather than inferred from raw totals.
 
+The later-referenced PES JPG, AI, EPS, and PDF brand files were also not present in the checkout or mounted workspace. The application therefore uses an explicitly documented text fallback—not a newly traced or invented symbol—until the approved red/black horizontal artwork and compact mark can be added without altering them.
+
 ## 1. Protected historical URLs
 
 These high-value routes are live content pages and are not redirected:

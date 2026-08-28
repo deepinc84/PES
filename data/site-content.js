@@ -1,10 +1,10 @@
 export const coreServices = [
-  { title: 'Electrical repairs & wiring', description: 'Troubleshooting and practical repairs for outlets, switches, wiring and electrical systems.', href: '/electrician-services/plugs-switches-wiring/', icon: '⌁' },
-  { title: 'Panels & service upgrades', description: 'Panel, subpanel and main-service work planned for present loads and future needs.', href: '/electrician-services/electrical-panels-subpanels/', icon: '▦' },
-  { title: 'Lighting', description: 'Lighting installation and upgrades for safer, more functional residential and commercial spaces.', href: '/electrician-services/lighting/', icon: '✦' },
-  { title: 'Electrical maintenance', description: 'Planned and responsive electrical maintenance for businesses and industrial facilities.', href: '/electrician-services/electrical-maintenance/', icon: '◉' },
-  { title: 'Inspections & thermography', description: 'Electrical inspections and infrared thermography that help identify concerns early.', href: '/electrician-services/ir-thermography-inspections/', icon: '◎' },
-  { title: 'Emergency service', description: 'A clear route for urgent electrical issues and unexpected system problems.', href: '/electrician-services/24h-emergency-electrical-services/', icon: '⚡' },
+  { title: 'Electrical repairs & wiring', description: 'Troubleshooting and practical repairs for outlets, switches, wiring and electrical systems.', href: '/electrician-services/plugs-switches-wiring/' },
+  { title: 'Panels & service upgrades', description: 'Panel, subpanel and main-service work planned for present loads and future needs.', href: '/electrician-services/electrical-panels-subpanels/' },
+  { title: 'Lighting', description: 'Lighting installation and upgrades for safer, more functional residential and commercial spaces.', href: '/electrician-services/lighting/' },
+  { title: 'Electrical maintenance', description: 'Planned and responsive electrical maintenance for businesses and industrial facilities.', href: '/electrician-services/electrical-maintenance/' },
+  { title: 'Inspections & thermography', description: 'Electrical inspections and infrared thermography that help identify concerns early.', href: '/electrician-services/ir-thermography-inspections/' },
+  { title: 'Emergency service', description: 'A clear route for urgent electrical issues and unexpected system problems.', href: '/electrician-services/24h-emergency-electrical-services/' },
 ]
 
 export const servicePages = {
