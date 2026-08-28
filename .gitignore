@@ -3,6 +3,8 @@ node_modules/
 .vercel/
 *.log
 .DS_Store
+.env*
+!.env.example
 
 # Archive recovery response cache
 data/archive/cache/*
