@@ -95,6 +95,10 @@ No DOCX correction files were present in the repository, `/workspace`, or `/tmp`
 
 For each available correction file, the next comparison pass must record: archived version, correction-document version, the specific conflict, and a recommendation. It must not silently select either text.
 
+## Owner-supplied historical stylesheet
+
+A first-party legacy CSS listing has now been analyzed separately in `data/archive/artifacts.json` and `docs/historical-css-reference.md`. It provides reliable evidence for the historical red/grey palette, Open Sans body typography, prominent van imagery, contact/quote intent, promotional strips, service checklists, process steps, and an about section. It does not contain recoverable page copy, URLs, metadata, telephone details, or the van image filename. It is design evidence rather than a recovered Wayback page and must not be counted among successfully recovered HTML pages.
+
 ## Image recovery inventory
 
 No archived image references could be extracted. `data/archive/images.json` intentionally remains empty. After replay access, every reference must be classified as `LOGO/BRAND ASSET`, `LIKELY COMPANY ASSET`, `LIKELY STOCK IMAGE`, or `UNKNOWN`. Priority manual candidates are PES logo artwork, the branded service van, identifiable company/project imagery, and thermography/equipment images. Archived stock/template images must not be published automatically.

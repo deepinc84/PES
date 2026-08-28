@@ -5,6 +5,7 @@ This directory separates recovered source material from production content.
 - `pages.json` is the machine-readable URL/page inventory.
 - `content/` receives faithful cleaned Markdown only after successful replay retrieval.
 - `images.json` records image references and manual provenance classifications.
+- `artifacts.json` records owner-supplied historical source artifacts that are not archived HTML pages.
 - `retrieval-failures.json` records blocked or failed requests.
 - `cache/` is the local response cache and is ignored by Git except for `.gitkeep`.
 
