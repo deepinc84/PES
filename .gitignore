@@ -3,3 +3,7 @@ node_modules/
 .vercel/
 *.log
 .DS_Store
+
+# Archive recovery response cache
+data/archive/cache/*
+!data/archive/cache/.gitkeep

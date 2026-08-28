@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "archive:recover": "node scripts/archive-recover.mjs"
   },
   "dependencies": {
     "next": "15.5.23",
