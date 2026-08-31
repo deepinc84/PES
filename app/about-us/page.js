@@ -1,0 +1,5 @@
+import {Breadcrumbs,Cta,PageHero} from '@/components/site'
+
+export const metadata={title:'About Platinum Electrical Services',description:'Learn about Platinum Electrical Services and our practical approach to electrical work in Calgary.',alternates:{canonical:'/about-us/'}}
+
+export default function About(){return <><Breadcrumbs items={[{label:'About us'}]}/><PageHero eyebrow="Platinum Electrical Services" title="Electrical service built around the work">We help Calgary homeowners, businesses and industrial teams plan, maintain and improve their electrical systems.</PageHero><section className="section wrap prose narrow"><h2>A practical, service-first approach</h2><p>Every project starts with the property, equipment and desired outcome. We focus on clear scope, appropriate electrical solutions and work that supports how the space is actually used.</p><p>Our service range includes residential repairs and upgrades, commercial maintenance, inspections, lighting, panels, life-safety systems and industrial equipment support.</p></section><Cta/></>}

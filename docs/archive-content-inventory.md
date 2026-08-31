@@ -66,10 +66,10 @@ These recommendations remain provisional until archived content and backlink row
 
 | HISTORICAL URL | CLASSIFICATION | ACTION | NOTES |
 | --- | --- | --- | --- |
-| `/electrical-panels/100-amp-panel/filter-all` | WORDPRESS/TAXONOMY GARBAGE | DISCARD | Do not recreate; reconsider only with meaningful backlink evidence. |
-| `/electrical-panels/100-amp-panel/healthcareindustry` | WORDPRESS/TAXONOMY GARBAGE | DISCARD | Do not recreate; reconsider only with meaningful backlink evidence. |
-| `/calgary-electrician/electrician-in-calgary/filter-all` | WORDPRESS/TAXONOMY GARBAGE | DISCARD | Do not recreate; reconsider only with meaningful backlink evidence. |
-| `/calgary-electrician/electrician-near-me-2/maintenancepackages` | WORDPRESS/TAXONOMY GARBAGE | DISCARD | Do not recreate; reconsider only with meaningful backlink evidence. |
+| `/electrical-panels/100-amp-panel/filter-all` | WORDPRESS/TAXONOMY GARBAGE | 301 | Redirect to the main electrical service upgrade page. |
+| `/electrical-panels/100-amp-panel/healthcareindustry` | WORDPRESS/TAXONOMY GARBAGE | 301 | Redirect to the closest industrial equipment-support page. |
+| `/calgary-electrician/electrician-in-calgary/filter-all` | WORDPRESS/TAXONOMY GARBAGE | 301 | Redirect to the legitimate Calgary parent page. |
+| `/calgary-electrician/electrician-near-me-2/maintenancepackages` | WORDPRESS/TAXONOMY GARBAGE | 301 | Redirect to electrical maintenance. |
 
 ## Current-site comparison
 

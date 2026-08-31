@@ -129,7 +129,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/our-services/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -167,7 +167,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/electrician-services/lighting/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -205,7 +205,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/electrician-services/industrial-mechanics/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -281,7 +281,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/electrician-services/lighting/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -300,7 +300,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/electrician-services/fire-alarm-life-safety/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -433,7 +433,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/electrician-services/industrial-mechanics/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -452,7 +452,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/electrician-services/industrial-mechanics/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -471,7 +471,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/electrician-services/industrial-mechanics/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -490,7 +490,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/electrician-services/industrial-mechanics/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -585,7 +585,7 @@
       "classification": "LEGACY DUPLICATE",
       "recoveryStatus": "ARCHIVE RETRIEVAL REQUIRED",
       "currentOrPlannedRoute": "/electrician-services/ir-thermography-inspections/",
-      "recommendedAction": "301 TO NEW PAGE",
+      "recommendedAction": "301 TO FINAL PAGE",
       "notes": "Seeded from owner-supplied historical URL inventory; no archived text inferred. Internet Archive was blocked by the execution environment."
     },
     {
@@ -602,10 +602,10 @@
       "internalLinks": [],
       "images": [],
       "classification": "WORDPRESS/TAXONOMY GARBAGE",
-      "recoveryStatus": "NOT RETRIEVED — REJECTED PATTERN",
-      "currentOrPlannedRoute": null,
-      "recommendedAction": "DISCARD",
-      "notes": "Owner-identified malformed taxonomy/template URL. Retain only if later backlink evidence proves meaningful value."
+      "recoveryStatus": "CLASSIFIED — REDIRECT MAPPED",
+      "currentOrPlannedRoute": "/electrician-services/main-electrical-service-upgrade/",
+      "recommendedAction": "301 TO FINAL PAGE",
+      "notes": "Malformed historical content-architecture URL mapped directly to /electrician-services/main-electrical-service-upgrade/; no fake page is created."
     },
     {
       "originalUrl": "https://pt-electrical.com/electrical-panels/100-amp-panel/healthcareindustry",
@@ -621,10 +621,10 @@
       "internalLinks": [],
       "images": [],
       "classification": "WORDPRESS/TAXONOMY GARBAGE",
-      "recoveryStatus": "NOT RETRIEVED — REJECTED PATTERN",
-      "currentOrPlannedRoute": null,
-      "recommendedAction": "DISCARD",
-      "notes": "Owner-identified malformed taxonomy/template URL. Retain only if later backlink evidence proves meaningful value."
+      "recoveryStatus": "CLASSIFIED — REDIRECT MAPPED",
+      "currentOrPlannedRoute": "/electrician-services/industrial-mechanics/",
+      "recommendedAction": "301 TO FINAL PAGE",
+      "notes": "Malformed historical content-architecture URL mapped directly to /electrician-services/industrial-mechanics/; no fake page is created."
     },
     {
       "originalUrl": "https://pt-electrical.com/calgary-electrician/electrician-in-calgary/filter-all",
@@ -640,10 +640,10 @@
       "internalLinks": [],
       "images": [],
       "classification": "WORDPRESS/TAXONOMY GARBAGE",
-      "recoveryStatus": "NOT RETRIEVED — REJECTED PATTERN",
-      "currentOrPlannedRoute": null,
-      "recommendedAction": "DISCARD",
-      "notes": "Owner-identified malformed taxonomy/template URL. Retain only if later backlink evidence proves meaningful value."
+      "recoveryStatus": "CLASSIFIED — REDIRECT MAPPED",
+      "currentOrPlannedRoute": "/calgary-electrician/electrician-in-calgary/",
+      "recommendedAction": "301 TO FINAL PAGE",
+      "notes": "Malformed historical content-architecture URL mapped directly to /calgary-electrician/electrician-in-calgary/; no fake page is created."
     },
     {
       "originalUrl": "https://pt-electrical.com/calgary-electrician/electrician-near-me-2/maintenancepackages",
@@ -659,10 +659,10 @@
       "internalLinks": [],
       "images": [],
       "classification": "WORDPRESS/TAXONOMY GARBAGE",
-      "recoveryStatus": "NOT RETRIEVED — REJECTED PATTERN",
-      "currentOrPlannedRoute": null,
-      "recommendedAction": "DISCARD",
-      "notes": "Owner-identified malformed taxonomy/template URL. Retain only if later backlink evidence proves meaningful value."
+      "recoveryStatus": "CLASSIFIED — REDIRECT MAPPED",
+      "currentOrPlannedRoute": "/electrician-services/electrical-maintenance/",
+      "recommendedAction": "301 TO FINAL PAGE",
+      "notes": "Malformed historical content-architecture URL mapped directly to /electrician-services/electrical-maintenance/; no fake page is created."
     }
   ]
 }
