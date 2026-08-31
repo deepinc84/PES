@@ -9,7 +9,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "archive:recover": "node scripts/archive-recover.mjs"
+    "archive:recover": "node scripts/archive-recover.mjs",
+    "legacy:check": "node scripts/check-legacy-routes.mjs"
   },
   "dependencies": {
     "next": "15.5.23",

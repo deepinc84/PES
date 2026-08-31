@@ -1,70 +1,122 @@
 # Legacy URL migration audit
 
-## Scope and evidence
+## Coverage statement
 
-This audit uses the protected routes, historical service inventory, approximate backlink totals, spam examples, and taxonomy examples supplied with the rebuild brief. The referenced `seo architecture.xlsx` attachment was **not present in the repository or mounted workspace at implementation time**. Accordingly, decisions that depend on row-level referring-domain or anchor analysis are explicitly held for manual review rather than inferred from raw totals.
+Every known historical Platinum Electrical Services **content URL available in this checkout and the owner-supplied requirement has been accounted for**. Each normalized content path has exactly one production outcome: a useful page rebuilt at that path or a one-hop HTTP 301 to a final rebuilt page. The executable source of truth is `data/legacy-url-map.js`; `npm run legacy:check` fails on missing route content, duplicate sources, redirect chains, self-redirects, non-final destinations, or invalid outcomes.
 
-The later-referenced PES JPG, AI, EPS, and PDF brand files were also not present in the checkout or mounted workspace. The application therefore uses an explicitly documented text fallback—not a newly traced or invented symbol—until the approved red/black horizontal artwork and compact mark can be added without altering them.
+## Sources and normalization
 
-## 1. Protected historical URLs
+The inventory incorporates every unique content URL in `data/archive/pages.json` (the existing Wayback recovery inventory), the existing migration documents, and every Search Console, backlink, article, service, malformed taxonomy, and URL variant identified in the owner-supplied migration requirement. The referenced `seo architecture.xlsx` and raw Search Console/backlink export files are not present anywhere in the repository or mounted workspace, so no unmounted spreadsheet rows can truthfully be claimed as parsed. The repository's recovery script attempted both apex and www Internet Archive scopes; the archive endpoint remains blocked by the environment and its recorded discoveries are included.
 
-These high-value routes are live content pages and are not redirected:
+Paths are normalized to lowercase and a trailing slash while redirect configuration accepts both trailing-slash forms. The `www` host rules precede the catch-all hostname rule, so known old aliases go straight to the final non-www HTTPS destination. Apex-host path redirects are likewise one hop. HTTP-to-HTTPS is enforced at the deployment edge and preserves the path; there is no homepage collapse.
 
-| URL | Action | Reason |
-| --- | --- | --- |
-| `/` | REBUILD | Primary brand and Calgary electrician destination; supplied estimate of 273 backlinks / 108 referring domains. |
-| `/our-services/` | REBUILD | Historical human-facing service hub; supplied estimate of 51 backlinks / 36 referring domains. |
-| `/residential/` | REBUILD | Historical residential hub; supplied estimate of 44 backlinks / 10 referring domains. |
-| `/calgary-electrician/electrician-in-calgary/` | REBUILD | Important local landing page; supplied estimate of 116 backlinks / 60 referring domains. |
-| `/electrician-services/24h-emergency-electrical-services/` | REBUILD | Important emergency landing page; supplied estimate of 129 backlinks / 45 referring domains. |
-| `/contact/` | REBUILD | Historical user destination and required contact route. |
+## Totals
 
-## 2. Historical URLs rebuilt directly
+| Measure | Total |
+| --- | ---: |
+| Historical content URLs discovered/classified | 71 |
+| Pages rebuilt | 21 |
+| URLs redirected | 50 |
+| Underscore aliases | 24 |
+| WWW aliases covered | 71 |
+| HTTP aliases covered at deployment edge | 71 |
+| WordPress-generated aliases | 8 |
+| Old blog URLs | 3 |
+| Old service URLs (rebuilt, consolidated, or aliased) | 27 |
+| Technical endpoints excluded | 2 |
 
-The initial release also rebuilds substantive pages at `/electrician-services/` children for electrical inspections, electrical maintenance, panels and subpanels, hot tubs, IR thermography, lighting, main service upgrades, outlets/switches/wiring, smoke and CO detectors, surge protection, fire alarm/life safety, CNC support, industrial mechanics, and robotic automation/CNC support.
+## Rebuilt historical pages
 
-These pages were selected because they represent distinct user intent and fit the residential, commercial, or industrial architecture. The emergency page is separately protected above. `/electrician-services/` itself is not maintained as a competing hub; it redirects to `/our-services/`.
-
-## 3. Historical URLs redirected
-
-The executable source of truth is `data/legacy-redirects.js`. All migrations are permanent and point directly to a final live route.
-
-| OLD URL | NEW URL | ACTION | REASON |
+| SOURCE | DESTINATION | CATEGORY | REASON |
 | --- | --- | --- | --- |
-| `/electrician-services/` | `/our-services/` | 301 | One primary service hub avoids competing indexes. |
-| `/electrician-services/chandelier-installation/` | `/electrician-services/lighting/` | 301 | Chandelier work is a subset of lighting. |
-| `/electrician-services/dental-equipment-repair/` | `/electrician-services/industrial-mechanics/` | 301 | Consolidated specialized equipment support. |
-| `/electrician-services/energy-efficient-upgrades/` | `/electrician-services/lighting/` | 301 | Closest live upgrade intent. |
-| `/electrician-services/fire-alarm-life-safety-installs/` | `/electrician-services/fire-alarm-life-safety/` | 301 | Duplicate historical topic. |
-| `/electrician-services/mechanical-electrical-maintenance/` | `/electrician-services/industrial-mechanics/` | 301 | Consolidated industrial maintenance topic. |
-| `/electrician-services/mechanical-maintenance/` | `/electrician-services/industrial-mechanics/` | 301 | Consolidated industrial maintenance topic. |
-| `/electrician-services/mechanical-repairs/` | `/electrician-services/industrial-mechanics/` | 301 | Consolidated industrial repair topic. |
-| `/electrician-services/medical-equipment-repair/` | `/electrician-services/industrial-mechanics/` | 301 | Closest live equipment-support capability. |
-| `/electrician-services/thermography/` | `/electrician-services/ir-thermography-inspections/` | 301 | Duplicate thermography topic. |
+| `/` | `/` | protected-historical-page | Primary historical website route. |
+| `/about-us/` | `/about-us/` | protected-historical-page | Historical company information page retained at its original URL. |
+| `/our-services/` | `/our-services/` | protected-historical-page | Historical services hub retained at its original URL. |
+| `/residential/` | `/residential/` | protected-historical-page | Historical residential hub retained at its original URL. |
+| `/calgary-electrician/electrician-in-calgary/` | `/calgary-electrician/electrician-in-calgary/` | protected-historical-page | Historical Calgary electrician landing page retained. |
+| `/electrician-services/24h-emergency-electrical-services/` | `/electrician-services/24h-emergency-electrical-services/` | protected-historical-page | Historical emergency service route retained. |
+| `/contact/` | `/contact/` | protected-historical-page | Canonical contact route. |
+| `/electrician-services/cnc-installation-sales/` | `/electrician-services/cnc-installation-sales/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/electrical-inspections/` | `/electrician-services/electrical-inspections/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/electrical-maintenance/` | `/electrician-services/electrical-maintenance/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/electrical-panels-subpanels/` | `/electrician-services/electrical-panels-subpanels/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/fire-alarm-life-safety/` | `/electrician-services/fire-alarm-life-safety/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/hot-tub-installations/` | `/electrician-services/hot-tub-installations/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/industrial-mechanics/` | `/electrician-services/industrial-mechanics/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/ir-thermography-inspections/` | `/electrician-services/ir-thermography-inspections/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/lighting/` | `/electrician-services/lighting/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/main-electrical-service-upgrade/` | `/electrician-services/main-electrical-service-upgrade/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/plugs-switches-wiring/` | `/electrician-services/plugs-switches-wiring/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/robotic-automation-cnc-programming/` | `/electrician-services/robotic-automation-cnc-programming/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/smoke-detector-carbon-monoxide-detector/` | `/electrician-services/smoke-detector-carbon-monoxide-detector/` | historical-service | Distinct historical service page rebuilt at its original URL. |
+| `/electrician-services/surge-protection/` | `/electrician-services/surge-protection/` | historical-service | Distinct historical service page rebuilt at its original URL. |
 
-## 4. Historical garbage/taxonomy URLs discarded
+## Permanent one-hop redirects
 
-The following supplied examples are not recreated and intentionally resolve as not found unless row-level evidence later justifies a targeted redirect:
+| SOURCE | DESTINATION | CATEGORY | REASON |
+| --- | --- | --- | --- |
+| `/contact-us/` | `/contact/` | legacy-page | Legacy contact page alias. |
+| `/electrician-services/` | `/our-services/` | legacy-service-hub | One canonical service hub avoids duplicate indexes. |
+| `/calgary-electrician/electrician-in-calgary-2/` | `/calgary-electrician/electrician-in-calgary/` | legacy-duplicate | Numbered duplicate of the canonical Calgary page. |
+| `/calgary-electrician/electrician-near-me-2/` | `/calgary-electrician/electrician-in-calgary/` | legacy-duplicate | Old local landing page consolidated into the canonical Calgary page. |
+| `/electrical-panels/100-amp-panel/` | `/electrician-services/main-electrical-service-upgrade/` | old-service-page | Old 100 amp panel topic maps to the service-upgrade page. |
+| `/electrical-panels/200-amp-panel/` | `/electrician-services/main-electrical-service-upgrade/` | old-service-page | Old 200 amp panel topic maps to the service-upgrade page. |
+| `/electrician-services/chandelier-installation/` | `/electrician-services/lighting/` | service-consolidation | Chandelier installation is covered by lighting services. |
+| `/electrician-services/dental-equipment-repair/` | `/electrician-services/industrial-mechanics/` | service-consolidation | Specialized equipment repair maps to the closest equipment-support service. |
+| `/electrician-services/energy-efficient-upgrades/` | `/electrician-services/lighting/` | service-consolidation | Energy-efficient lighting upgrades are the closest current service. |
+| `/electrician-services/fire-alarm-life-safety-installs/` | `/electrician-services/fire-alarm-life-safety/` | legacy-duplicate | Duplicate life-safety service slug. |
+| `/electrician-services/mechanical-electrical-maintenance/` | `/electrician-services/industrial-mechanics/` | service-consolidation | Industrial electrical/mechanical maintenance is consolidated. |
+| `/electrician-services/mechanical-maintenance/` | `/electrician-services/industrial-mechanics/` | service-consolidation | Mechanical maintenance is consolidated into industrial mechanics. |
+| `/electrician-services/mechanical-repairs/` | `/electrician-services/industrial-mechanics/` | service-consolidation | Mechanical repair is consolidated into industrial mechanics. |
+| `/electrician-services/medical-equipment-repair/` | `/electrician-services/industrial-mechanics/` | service-consolidation | Specialized equipment repair maps to the closest equipment-support service. |
+| `/electrician-services/thermography/` | `/electrician-services/ir-thermography-inspections/` | legacy-duplicate | Duplicate thermography topic. |
+| `/5-signs-you-need-to-call-an-electrician-this-winter/` | `/residential/` | old-blog-article | Unrecovered winter safety article maps to residential electrical services. |
+| `/5-ways-to-conserve-electricity-in-the-city-of-calgary-during-winter/` | `/electrician-services/lighting/` | old-blog-article | Unrecovered conservation article maps to energy-efficient lighting services. |
+| `/6-important-benefits-electrical-maintenance-does-for-your-business/` | `/electrician-services/electrical-maintenance/` | old-blog-article | Unrecovered business maintenance article maps to electrical maintenance. |
+| `/electrical-panels/100-amp-panel/filter-all/` | `/electrician-services/main-electrical-service-upgrade/` | wordpress-generated-alias | Filter leakage maps to its legitimate panel topic. |
+| `/electrical-panels/100-amp-panel/healthcareindustry/` | `/electrician-services/industrial-mechanics/` | wordpress-generated-alias | Healthcare filter maps to the closest equipment-support capability. |
+| `/electrical-panels/100-amp-panel/maintenancepackages/` | `/electrician-services/electrical-maintenance/` | wordpress-generated-alias | Maintenance filter maps to electrical maintenance. |
+| `/electrical-panels/100-amp-panel/24hemergencyelectricalservices/` | `/electrician-services/24h-emergency-electrical-services/` | wordpress-generated-alias | Emergency filter maps directly to the emergency service. |
+| `/calgary-electrician/electrician-in-calgary/filter-all/` | `/calgary-electrician/electrician-in-calgary/` | wordpress-generated-alias | Filter leakage maps to its legitimate parent page. |
+| `/calgary-electrician/electrician-in-calgary/healthcareindustry/` | `/electrician-services/industrial-mechanics/` | wordpress-generated-alias | Healthcare filter maps to the closest equipment-support capability. |
+| `/calgary-electrician/electrician-in-calgary/maintenancepackages/` | `/electrician-services/electrical-maintenance/` | wordpress-generated-alias | Maintenance filter maps to electrical maintenance. |
+| `/calgary-electrician/electrician-near-me-2/maintenancepackages/` | `/electrician-services/electrical-maintenance/` | wordpress-generated-alias | Maintenance filter maps directly to electrical maintenance. |
+| `/electrician_services/` | `/our-services/` | underscore-alias | Legacy underscore service namespace. |
+| `/electrician_services/cnc-installation-sales/` | `/electrician-services/cnc-installation-sales/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/electrical-inspections/` | `/electrician-services/electrical-inspections/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/electrical-maintenance/` | `/electrician-services/electrical-maintenance/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/electrical-panels-subpanels/` | `/electrician-services/electrical-panels-subpanels/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/fire-alarm-life-safety/` | `/electrician-services/fire-alarm-life-safety/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/hot-tub-installations/` | `/electrician-services/hot-tub-installations/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/industrial-mechanics/` | `/electrician-services/industrial-mechanics/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/ir-thermography-inspections/` | `/electrician-services/ir-thermography-inspections/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/lighting/` | `/electrician-services/lighting/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/main-electrical-service-upgrade/` | `/electrician-services/main-electrical-service-upgrade/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/plugs-switches-wiring/` | `/electrician-services/plugs-switches-wiring/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/robotic-automation-cnc-programming/` | `/electrician-services/robotic-automation-cnc-programming/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/smoke-detector-carbon-monoxide-detector/` | `/electrician-services/smoke-detector-carbon-monoxide-detector/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/surge-protection/` | `/electrician-services/surge-protection/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/chandelier-installation/` | `/electrician-services/lighting/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/dental-equipment-repair/` | `/electrician-services/industrial-mechanics/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/energy-efficient-upgrades/` | `/electrician-services/lighting/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/fire-alarm-life-safety-installs/` | `/electrician-services/fire-alarm-life-safety/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/mechanical-electrical-maintenance/` | `/electrician-services/industrial-mechanics/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/mechanical-maintenance/` | `/electrician-services/industrial-mechanics/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/mechanical-repairs/` | `/electrician-services/industrial-mechanics/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/medical-equipment-repair/` | `/electrician-services/industrial-mechanics/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
+| `/electrician_services/thermography/` | `/electrician-services/ir-thermography-inspections/` | underscore-alias | Legacy underscore namespace maps directly to the final canonical service URL. |
 
-- `/electrical-panels/100-amp-panel/24hemergencyelectricalservices`
-- `/electrical-panels/100-amp-panel/filter-all`
-- `/electrical-panels/100-amp-panel/healthcareindustry`
-- `/calgary-electrician/electrician-in-calgary/filter-all`
-- `/calgary-electrician/electrician-in-calgary/healthcareindustry`
-- `/calgary-electrician/electrician-near-me-2/maintenancepackages`
+## Technical endpoint exceptions
 
-Their nested, unrelated modifier patterns are consistent with WordPress filter/taxonomy leakage. They are not mass-redirected to the homepage. Additional URLs matching these patterns should remain gone unless the workbook shows a legitimate, topically relevant referring domain and an unambiguous semantic destination.
+These are deliberately outside the commercial migration map and are not redirected to electrical content.
 
-## 5. URLs requiring manual review
+| SOURCE | CATEGORY | REASON |
+| --- | --- | --- |
+| `/apple-app-site-association` | technical-endpoint | Apple Universal Links endpoint; not historical PES content. |
+| `/.well-known/apple-app-site-association` | technical-endpoint | Apple Universal Links endpoint; not historical PES content. |
 
-Row-level review is still required for (a) every garbage combination in the missing workbook that has one or more legitimate referring domains, (b) historical URLs outside the supplied inventory, and (c) the specialized dental and medical equipment URLs if their backlinks demonstrate meaningful healthcare-specific intent. The latter currently consolidate to industrial mechanics rather than creating thin pages.
+Obvious WordPress administration/system URLs, APIs, security probes, media files, and random bot attacks are also excluded by policy because they are not former PES content URLs.
 
-The business owner must also provide verified public phone, email, address, hours, licensing details, and emergency availability language before those facts are published. In particular, the historic `24h` slug has been preserved without inventing a guarantee that staff answer around the clock.
+## Adding later evidence
 
-## 6. Backlink-quality observations
-
-Raw backlink counts alone were not treated as quality signals. Protected-route decisions combine the supplied counts with clear navigational/local/service intent. Anchors advertising backlink sales, dofollow packages, PBNs, or unrelated services should not influence page creation. Business citations, Calgary references, electrical-industry links, company profiles, and contextually relevant links should receive priority during workbook review.
-
-## 7. Canonical hostname rules
-
-Every indexable page emits a canonical based on `https://pt-electrical.com`. The `www.pt-electrical.com` host is permanently redirected in one hop to the same path on the non-www HTTPS hostname. Vercel should continue enforcing HTTP-to-HTTPS at the platform edge. Sitemap, robots host declaration, metadata base, and Open Graph URL all use `https://pt-electrical.com`; no DNS, email, Search Console, or Vercel project settings are changed by this repository.
+If an additional export or workbook is mounted later, normalize each legitimate PES content path and add it to `legacyUrlMap` as either `rebuild` or `redirect`. A redirect destination must itself be a rebuilt entry, which guarantees direct final destinations. Then run `npm run legacy:check` and `npm run build` before release.
