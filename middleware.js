@@ -23,8 +23,8 @@ export async function middleware(request) {
 
   const rewriteUrl = request.nextUrl.clone()
   rewriteUrl.pathname = decision.route === '/'
-    ? '/__trusted-engine/'
-    : `/__trusted-engine${decision.route}`
+    ? '/trusted-engine-renderer/'
+    : `/trusted-engine-renderer${decision.route}`
 
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-trusted-engine-rewrite', '1')
@@ -37,6 +37,6 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    '/((?!api(?:/|$)|_next(?:/|$)|favicon.ico$|robots.txt$|sitemap.xml$|__trusted-engine(?:/|$)|.*\\.[^/]+$).*)',
+    '/((?!api(?:/|$)|_next(?:/|$)|favicon.ico$|robots.txt$|sitemap.xml$|trusted-engine-renderer(?:/|$)|.*\\.[^/]+$).*)',
   ],
 }
