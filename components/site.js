@@ -7,9 +7,28 @@ import Link from 'next/link'
  */
 export function Logo() { return <Link className="logo" href="/" aria-label="Platinum Electrical Services Inc. home"><strong className="logo-pes">PES</strong><span className="logo-name"><b>PLATINUM</b><b>ELECTRICAL</b><b>SERVICES INC.</b></span></Link> }
 
-export function Header() { return <header className="site-header"><div className="top-strip"><div className="wrap">Residential <i>•</i> Commercial <i>•</i> Industrial <Link href="/electrician-services/24h-emergency-electrical-services/">Emergency electrical service</Link></div></div><div className="wrap nav-row"><Logo /><nav aria-label="Primary navigation"><Link href="/">Home</Link><Link href="/our-services/">Services</Link><Link href="/residential/">Residential</Link><Link href="/calgary-electrician/electrician-in-calgary/">Calgary Electrician</Link><Link href="/contact/">Contact</Link></nav><Link className="nav-cta" href="/contact/">Request service</Link></div></header> }
+function trustedLinks(value) {
+  if (!Array.isArray(value)) return []
+  const seen = new Set()
+  return value.flatMap(item => {
+    if (!item || typeof item !== 'object') return []
+    const href = typeof item.href === 'string' && item.href.startsWith('/') ? item.href : null
+    const label = typeof item.label === 'string' && item.label.trim() ? item.label.trim() : null
+    if (!href || !label || seen.has(href)) return []
+    seen.add(href)
+    return [{ id: typeof item.id === 'string' ? item.id : href, href, label }]
+  })
+}
 
-export function Footer() { return <footer><div className="wrap footer-grid"><div><Logo /><p>Electrical solutions for residential, commercial and industrial needs in Calgary, Alberta.</p></div><div><h2>Services</h2><Link href="/residential/">Residential</Link><Link href="/our-services/#commercial">Commercial</Link><Link href="/our-services/#industrial">Industrial</Link><Link href="/electrician-services/24h-emergency-electrical-services/">Emergency</Link></div><div><h2>Company</h2><Link href="/calgary-electrician/electrician-in-calgary/">Calgary Electrician</Link><Link href="/our-services/">All Services</Link><Link href="/contact/">Contact</Link><a href="https://trustedroofingcalgary.com/">Trusted Roofing & Exteriors</a></div></div><div className="wrap copyright"><span>© {new Date().getFullYear()} Platinum Electrical Services</span><span>Calgary, Alberta</span></div></footer> }
+export function Header({ trustedNavigation = null }) {
+  const engineLinks = trustedLinks(trustedNavigation?.headerLinks)
+  return <header className="site-header"><div className="top-strip"><div className="wrap">Residential <i>•</i> Commercial <i>•</i> Industrial <Link href="/electrician-services/24h-emergency-electrical-services/">Emergency electrical service</Link></div></div><div className="wrap nav-row"><Logo /><nav aria-label="Primary navigation"><Link href="/">Home</Link><Link href="/our-services/">Services</Link><Link href="/residential/">Residential</Link><Link href="/calgary-electrician/electrician-in-calgary/">Calgary Electrician</Link>{engineLinks.map(item => <Link key={item.id} href={item.href}>{item.label}</Link>)}<Link href="/contact/">Contact</Link></nav><Link className="nav-cta" href="/contact/">Request service</Link></div></header>
+}
+
+export function Footer({ trustedNavigation = null }) {
+  const engineLinks = trustedLinks(trustedNavigation?.footerLinks)
+  return <footer><div className="wrap footer-grid"><div><Logo /><p>Electrical solutions for residential, commercial and industrial needs in Calgary, Alberta.</p></div><div><h2>Services</h2><Link href="/residential/">Residential</Link><Link href="/our-services/#commercial">Commercial</Link><Link href="/our-services/#industrial">Industrial</Link><Link href="/electrician-services/24h-emergency-electrical-services/">Emergency</Link></div><div><h2>Company</h2><Link href="/calgary-electrician/electrician-in-calgary/">Calgary Electrician</Link><Link href="/our-services/">All Services</Link>{engineLinks.map(item => <Link key={item.id} href={item.href}>{item.label}</Link>)}<Link href="/contact/">Contact</Link><a href="https://trustedroofingcalgary.com/">Trusted Roofing & Exteriors</a></div></div><div className="wrap copyright"><span>© {new Date().getFullYear()} Platinum Electrical Services</span><span>Calgary, Alberta</span></div></footer>
+}
 
 export function ServiceCard({ title, description, href }) { return <article className="service-card"><h3>{title}</h3><p>{description}</p><Link href={href} aria-label={`Learn about ${title}`}>Learn more <span>→</span></Link></article> }
 
