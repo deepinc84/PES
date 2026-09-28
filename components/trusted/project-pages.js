@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Cta } from '@/components/site'
+import { Breadcrumbs, Cta } from '@/components/site'
 
 function text(value, fallback = '') {
   return typeof value === 'string' && value.trim() ? value.trim() : fallback
@@ -76,7 +76,7 @@ export function TrustedProjectPage({ page }) {
     { '@type': 'ListItem', position: 3, name: text(project.title, 'Project'), item: internalHref(project.href, '/projects/') },
   ] }
 
-  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} /><ProjectHero project={project} /><ProjectSummary project={project} /><ProjectGallery project={project} /><ProjectFaq project={project} /><Cta /></>
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} /><Breadcrumbs items={[{ label: 'Projects', href: '/projects/' }, { label: text(project.title, 'Project') }]} /><ProjectHero project={project} /><ProjectSummary project={project} /><ProjectGallery project={project} /><ProjectFaq project={project} /><Cta /></>
 }
 
 function ProjectCard({ project }) {
