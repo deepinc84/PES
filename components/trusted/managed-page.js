@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { PageHero } from '@/components/site'
+import { TrustedProjectIndexPage, TrustedProjectPage } from '@/components/trusted/project-pages'
 
 function asText(value, fallback = '') {
   return typeof value === 'string' ? value : fallback
@@ -94,6 +95,8 @@ export function TrustedManagedPage({ localSections = [], override }) {
   }
 
   if (override.mode === 'replace' || override.mode === 'create') {
+    if (override.page?.template === 'project') return <TrustedProjectPage page={override.page} />
+    if (override.page?.template === 'projectIndex') return <TrustedProjectIndexPage page={override.page} />
     const sections = Array.isArray(override.page?.sections) ? override.page.sections : []
     return <>{sections.map((section, index) => <TrustedSection key={section?.id ?? `trusted-${index}`} section={section} />)}</>
   }
@@ -105,6 +108,7 @@ export function trustedMetadata(localMetadata, override) {
   if (!override?.active || (override.mode !== 'replace' && override.mode !== 'create' && override.mode !== 'partial')) return localMetadata
   const seo = override.page?.seo ?? override.seo
   if (!seo || typeof seo !== 'object') return localMetadata
+  const image = safeImageSrc(seo.image)
 
   return {
     ...localMetadata,
@@ -112,5 +116,9 @@ export function trustedMetadata(localMetadata, override) {
     ...(typeof seo.description === 'string' ? { description: seo.description } : {}),
     ...(typeof seo.canonical === 'string' ? { alternates: { ...(localMetadata?.alternates ?? {}), canonical: seo.canonical } } : {}),
     ...(seo.robots && typeof seo.robots === 'object' ? { robots: seo.robots } : typeof seo.robots === 'string' ? { robots: seo.robots } : {}),
+    ...(image ? {
+      openGraph: { ...(localMetadata?.openGraph ?? {}), images: [{ url: image }] },
+      twitter: { ...(localMetadata?.twitter ?? {}), card: 'summary_large_image', images: [image] },
+    } : {}),
   }
 }
