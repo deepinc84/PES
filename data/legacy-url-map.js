@@ -17,10 +17,11 @@ const protectedPages = [
   rebuild('/calgary-electrician/electrician-in-calgary/', 'protected-historical-page', 'Historical Calgary electrician landing page retained.'),
   rebuild('/electrician-services/24h-emergency-electrical-services/', 'protected-historical-page', 'Historical emergency service route retained.'),
   rebuild('/contact/', 'protected-historical-page', 'Canonical contact route.'),
+  rebuild('/what-you-need-to-know-about-electrical-generator-installation/', 'recovered-article', 'Historical generator-installation topic retained as a useful evergreen article.'),
 ]
 
 const rebuiltServiceSlugs = [
-  'cnc-installation-sales', 'electrical-inspections', 'electrical-maintenance',
+  'cnc-installation-sales', 'dental-equipment-repair', 'electrical-inspections', 'electrical-maintenance',
   'electrical-panels-subpanels', 'fire-alarm-life-safety', 'hot-tub-installations',
   'industrial-mechanics', 'ir-thermography-inspections', 'lighting',
   'main-electrical-service-upgrade', 'plugs-switches-wiring',
@@ -33,13 +34,18 @@ const rebuiltServices = rebuiltServiceSlugs.map(slug => rebuild(
 
 const explicitRedirects = [
   redirect('/contact-us/', '/contact/', 'legacy-page', 'Legacy contact page alias.'),
+  redirect('/contact-form-thank-you.html/', '/contact/', 'legacy-form-result', 'Retired form confirmation page maps to the current contact page.'),
+  redirect('/services/', '/our-services/', 'legacy-service-hub', 'Historical services alias maps to the current service hub.'),
+  redirect('/author/sa-admin/', '/about-us/', 'wordpress-author-archive', 'Retired WordPress author archive maps to the company page.'),
+  redirect('/feed/', '/', 'wordpress-feed', 'Retired WordPress site feed maps to the current website root.'),
+  redirect('/comments/feed/', '/', 'wordpress-feed', 'Retired WordPress comments feed maps to the current website root.'),
+  redirect('/what-you-need-to-know-about-electrical-generator-installation/feed/', '/what-you-need-to-know-about-electrical-generator-installation/', 'wordpress-feed', 'Article feed maps directly to the recovered article.'),
   redirect('/electrician-services/', '/our-services/', 'legacy-service-hub', 'One canonical service hub avoids duplicate indexes.'),
   redirect('/calgary-electrician/electrician-in-calgary-2/', '/calgary-electrician/electrician-in-calgary/', 'legacy-duplicate', 'Numbered duplicate of the canonical Calgary page.'),
   redirect('/calgary-electrician/electrician-near-me-2/', '/calgary-electrician/electrician-in-calgary/', 'legacy-duplicate', 'Old local landing page consolidated into the canonical Calgary page.'),
   redirect('/electrical-panels/100-amp-panel/', '/electrician-services/main-electrical-service-upgrade/', 'old-service-page', 'Old 100 amp panel topic maps to the service-upgrade page.'),
   redirect('/electrical-panels/200-amp-panel/', '/electrician-services/main-electrical-service-upgrade/', 'old-service-page', 'Old 200 amp panel topic maps to the service-upgrade page.'),
   redirect('/electrician-services/chandelier-installation/', '/electrician-services/lighting/', 'service-consolidation', 'Chandelier installation is covered by lighting services.'),
-  redirect('/electrician-services/dental-equipment-repair/', '/electrician-services/industrial-mechanics/', 'service-consolidation', 'Specialized equipment repair maps to the closest equipment-support service.'),
   redirect('/electrician-services/energy-efficient-upgrades/', '/electrician-services/lighting/', 'service-consolidation', 'Energy-efficient lighting upgrades are the closest current service.'),
   redirect('/electrician-services/fire-alarm-life-safety-installs/', '/electrician-services/fire-alarm-life-safety/', 'legacy-duplicate', 'Duplicate life-safety service slug.'),
   redirect('/electrician-services/mechanical-electrical-maintenance/', '/electrician-services/industrial-mechanics/', 'service-consolidation', 'Industrial electrical/mechanical maintenance is consolidated.'),
