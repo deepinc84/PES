@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { PageHero } from '@/components/site'
 import { TrustedProjectIndexPage, TrustedProjectPage } from '@/components/trusted/project-pages'
+import { TrustedServiceAreaIndexPage, TrustedServiceAreaPage } from '@/components/trusted/service-area-pages'
 
 function asText(value, fallback = '') {
   return typeof value === 'string' ? value : fallback
@@ -62,25 +63,20 @@ function remoteEntry(section, fallbackIndex) {
 
 export function applyTrustedOperations(localSections, operations) {
   const sections = [...localSections]
-
   for (const [operationIndex, operation] of (Array.isArray(operations) ? operations : []).entries()) {
     if (!operation || typeof operation !== 'object') continue
     const targetIndex = sections.findIndex(section => section.id === operation.target)
     if (targetIndex < 0) continue
-
     if (operation.action === 'remove') {
       sections.splice(targetIndex, 1)
       continue
     }
-
     const entry = remoteEntry(operation.section, operationIndex)
     if (!entry) continue
-
     if (operation.action === 'replace') sections.splice(targetIndex, 1, entry)
     if (operation.action === 'insertBefore') sections.splice(targetIndex, 0, entry)
     if (operation.action === 'insertAfter') sections.splice(targetIndex + 1, 0, entry)
   }
-
   return sections
 }
 
@@ -97,6 +93,8 @@ export function TrustedManagedPage({ localSections = [], override }) {
   if (override.mode === 'replace' || override.mode === 'create') {
     if (override.page?.template === 'project') return <TrustedProjectPage page={override.page} />
     if (override.page?.template === 'projectIndex') return <TrustedProjectIndexPage page={override.page} />
+    if (override.page?.template === 'serviceArea') return <TrustedServiceAreaPage page={override.page} />
+    if (override.page?.template === 'serviceAreaIndex') return <TrustedServiceAreaIndexPage page={override.page} />
     const sections = Array.isArray(override.page?.sections) ? override.page.sections : []
     return <>{sections.map((section, index) => <TrustedSection key={section?.id ?? `trusted-${index}`} section={section} />)}</>
   }
