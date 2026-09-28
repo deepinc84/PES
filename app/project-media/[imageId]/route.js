@@ -8,32 +8,74 @@ function parseImageId(value) {
 
 async function fetchProjectImage(imageId) {
   const id = parseImageId(imageId)
-  if (!id) return null
+  if (!id) return { ok: false, reason: 'invalid-id', status: 400 }
 
-  const upstream = await fetch(`${SIDEBOX_SOURCE}/${id}.jpg`, {
-    headers: { accept: 'image/jpeg,image/*;q=0.8,*/*;q=0.5' },
-    next: { revalidate: 2592000 },
-  })
+  let upstream
+  try {
+    upstream = await fetch(`${SIDEBOX_SOURCE}/${id}.jpg`, {
+      headers: { accept: 'image/jpeg,image/*;q=0.8,*/*;q=0.5' },
+      cache: 'no-store',
+    })
+  } catch {
+    return { ok: false, reason: 'upstream-fetch-error', status: 502 }
+  }
 
-  if (!upstream.ok) return null
-
-  const contentType = upstream.headers.get('content-type') || 'image/jpeg'
-  if (!contentType.toLowerCase().startsWith('image/')) return null
-
+  const upstreamType = upstream.headers.get('content-type') || ''
   const declaredLength = Number(upstream.headers.get('content-length') || 0)
-  if (Number.isFinite(declaredLength) && declaredLength > MAX_IMAGE_BYTES) return null
 
-  return { upstream, contentType }
+  if (!upstream.ok) {
+    return {
+      ok: false,
+      reason: 'upstream-http-error',
+      status: 404,
+      upstreamStatus: upstream.status,
+      upstreamType,
+      declaredLength,
+    }
+  }
+
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_IMAGE_BYTES) {
+    return {
+      ok: false,
+      reason: 'upstream-image-too-large',
+      status: 413,
+      upstreamStatus: upstream.status,
+      upstreamType,
+      declaredLength,
+    }
+  }
+
+  // These routes only resolve known .jpg project assets. Some older Sidebox
+  // objects have generic S3 MIME metadata, so do not reject a valid 200 solely
+  // because Content-Type is application/octet-stream.
+  return {
+    ok: true,
+    upstream,
+    contentType: upstreamType.toLowerCase().startsWith('image/') ? upstreamType : 'image/jpeg',
+    upstreamStatus: upstream.status,
+    upstreamType,
+    declaredLength,
+  }
+}
+
+function diagnosticHeaders(result) {
+  return {
+    'cache-control': 'public, max-age=300',
+    'x-project-image-reason': result.reason || 'unknown',
+    'x-project-image-upstream-status': String(result.upstreamStatus || ''),
+    'x-project-image-upstream-type': result.upstreamType || '',
+    'x-project-image-upstream-length': String(result.declaredLength || ''),
+  }
 }
 
 export async function GET(_request, { params }) {
   const resolved = await params
   const result = await fetchProjectImage(resolved?.imageId)
 
-  if (!result) {
+  if (!result.ok) {
     return new Response('Project image not found.', {
-      status: 404,
-      headers: { 'cache-control': 'public, max-age=300' },
+      status: result.status || 404,
+      headers: diagnosticHeaders(result),
     })
   }
 
@@ -51,10 +93,10 @@ export async function HEAD(_request, { params }) {
   const resolved = await params
   const result = await fetchProjectImage(resolved?.imageId)
 
-  if (!result) {
+  if (!result.ok) {
     return new Response(null, {
-      status: 404,
-      headers: { 'cache-control': 'public, max-age=300' },
+      status: result.status || 404,
+      headers: diagnosticHeaders(result),
     })
   }
 
