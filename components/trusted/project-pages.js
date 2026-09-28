@@ -15,6 +15,12 @@ function imageUrl(value) {
   return trimmed.startsWith('https://') || trimmed.startsWith('http://') || trimmed.startsWith('/') ? trimmed : null
 }
 
+function absoluteUrl(domain, href) {
+  const host = text(domain).replace(/^https?:\/\//, '').replace(/\/$/, '')
+  if (!host) return internalHref(href, '/')
+  return `https://${host}${internalHref(href, '/')}`
+}
+
 function locationLabel(project) {
   return [project?.location?.neighborhood, project?.location?.city, project?.location?.province]
     .filter(Boolean)
@@ -29,6 +35,99 @@ function projectImages(project) {
   return Array.isArray(project?.assets)
     ? project.assets.filter(asset => asset?.type === 'image' && imageUrl(asset?.url))
     : []
+}
+
+function publicGeo(project) {
+  const lat = project?.location?.lat
+  const lng = project?.location?.lng
+  if (typeof lat !== 'number' || typeof lng !== 'number') return undefined
+  return { '@type': 'GeoCoordinates', latitude: Number(lat.toFixed(3)), longitude: Number(lng.toFixed(3)) }
+}
+
+function projectSchema(page, project) {
+  const siteName = text(page?.site?.name, 'Service provider')
+  const domain = text(page?.site?.domain)
+  const projectUrl = absoluteUrl(domain, internalHref(project?.href, `/projects/${project?.slug || ''}/`))
+  const serviceUrl = absoluteUrl(domain, internalHref(project?.serviceHref, '/our-services/'))
+  const placeName = [project?.location?.neighborhood, project?.location?.city].filter(Boolean).join(', ') || project?.location?.city || 'Service area'
+  const geo = publicGeo(project)
+  const images = projectImages(project).map((asset, index) => ({
+    '@type': 'ImageObject',
+    '@id': `${projectUrl}#image-${index + 1}`,
+    contentUrl: imageUrl(asset.url),
+    url: imageUrl(asset.url),
+    name: text(asset.caption, `${project.title} project photo ${index + 1}`),
+    caption: text(asset.caption) || undefined,
+    representativeOfPage: index === 0 || undefined,
+    creator: { '@type': 'Organization', name: siteName, url: absoluteUrl(domain, '/') },
+    creditText: siteName,
+    contentLocation: {
+      '@type': 'Place',
+      name: placeName,
+      geo,
+    },
+  }))
+  const projectId = `${projectUrl}#project`
+  const serviceId = `${serviceUrl}#service`
+  const webpageId = `${projectUrl}#webpage`
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${absoluteUrl(domain, '/')}#organization`,
+        name: siteName,
+        url: absoluteUrl(domain, '/'),
+      },
+      {
+        '@type': 'WebPage',
+        '@id': webpageId,
+        url: projectUrl,
+        name: text(project.title, 'Completed project'),
+        description: text(project.summary, text(project.description)),
+        mainEntity: { '@id': projectId },
+        primaryImageOfPage: images[0] ? { '@id': images[0]['@id'] } : undefined,
+        about: [{ '@id': projectId }, { '@id': serviceId }, { '@type': 'Place', name: placeName }],
+      },
+      {
+        '@type': 'Service',
+        '@id': serviceId,
+        url: serviceUrl,
+        name: serviceLabel(project),
+        provider: { '@id': `${absoluteUrl(domain, '/')}#organization` },
+        areaServed: { '@type': 'Place', name: placeName },
+      },
+      {
+        '@type': 'Project',
+        '@id': projectId,
+        provider: { '@id': `${absoluteUrl(domain, '/')}#organization` },
+        name: text(project.title, 'Completed project'),
+        description: text(project.summary, text(project.description)),
+        url: projectUrl,
+        category: serviceLabel(project),
+        mainEntityOfPage: { '@id': webpageId },
+        image: images.map(image => ({ '@id': image['@id'] })),
+        subjectOf: images.map(image => ({ '@id': image['@id'] })),
+        about: { '@id': serviceId },
+        location: {
+          '@type': 'Place',
+          name: placeName,
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: project?.location?.city || undefined,
+            addressRegion: project?.location?.province || undefined,
+            addressCountry: 'CA',
+          },
+          geo,
+        },
+        areaServed: { '@type': 'Place', name: placeName },
+        dateCreated: project?.startedAt || project?.completedAt || project?.publishedAt || undefined,
+        dateModified: project?.completedAt || project?.publishedAt || undefined,
+      },
+      ...images,
+    ],
+  }
 }
 
 const stageOrder = ['before', 'during', 'after', 'general']
@@ -71,12 +170,13 @@ export function TrustedProjectPage({ page }) {
   const project = page?.project
   if (!project || typeof project !== 'object') return null
   const breadcrumb = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: '/' },
-    { '@type': 'ListItem', position: 2, name: 'Projects', item: '/projects/' },
-    { '@type': 'ListItem', position: 3, name: text(project.title, 'Project'), item: internalHref(project.href, '/projects/') },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl(page?.site?.domain, '/') },
+    { '@type': 'ListItem', position: 2, name: 'Projects', item: absoluteUrl(page?.site?.domain, '/projects/') },
+    { '@type': 'ListItem', position: 3, name: text(project.title, 'Project'), item: absoluteUrl(page?.site?.domain, internalHref(project.href, '/projects/')) },
   ] }
+  const schema = projectSchema(page, project)
 
-  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} /><Breadcrumbs items={[{ label: 'Projects', href: '/projects/' }, { label: text(project.title, 'Project') }]} /><ProjectHero project={project} /><ProjectSummary project={project} /><ProjectGallery project={project} /><ProjectFaq project={project} /><Cta /></>
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} /><Breadcrumbs items={[{ label: 'Projects', href: '/projects/' }, { label: text(project.title, 'Project') }]} /><ProjectHero project={project} /><ProjectSummary project={project} /><ProjectGallery project={project} /><ProjectFaq project={project} /><Cta /></>
 }
 
 function ProjectCard({ project }) {
