@@ -1,0 +1,1 @@
+Dynamic project pages must use privacy-safe public coordinates from Trusted Engine for structured data and service-area relationships; exact private address/coordinate fields are not client-facing.
