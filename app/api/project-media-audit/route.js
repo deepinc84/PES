@@ -6,7 +6,7 @@ const SIDEBOX_SOURCE = 'https://s3.amazonaws.com/static.sidebox.com/D36C87DD-363
 const PROJECTS_URL = 'https://pt-electrical.com/projects/'
 
 export async function GET() {
-  const page = await fetch(PROJECTS_URL, { cache: 'no-store' })
+  const page = await fetch(PROJECTS_URL, { cache: 'no-store', signal: AbortSignal.timeout(5000) })
   if (!page.ok) {
     return NextResponse.json({ ok: false, error: `projects-http-${page.status}` }, { status: 502 })
   }
@@ -14,30 +14,25 @@ export async function GET() {
   const html = await page.text()
   const ids = [...new Set([...html.matchAll(/\/project-media\/(\d{6,10})\.jpg/g)].map((match) => match[1]))]
 
-  const results = []
-  const concurrency = 12
-  for (let i = 0; i < ids.length; i += concurrency) {
-    const batch = ids.slice(i, i + concurrency)
-    const checked = await Promise.all(batch.map(async (id) => {
-      try {
-        const response = await fetch(`${SIDEBOX_SOURCE}/${id}.jpg`, {
-          headers: { accept: 'image/jpeg,image/*;q=0.8,*/*;q=0.5' },
-          cache: 'no-store',
-        })
-        if (response.body) await response.body.cancel()
-        return {
-          id,
-          status: response.status,
-          ok: response.ok,
-          contentType: response.headers.get('content-type'),
-          contentLength: response.headers.get('content-length'),
-        }
-      } catch (error) {
-        return { id, status: 0, ok: false, error: error?.name || 'fetch-error' }
+  const results = await Promise.all(ids.map(async (id) => {
+    try {
+      const response = await fetch(`${SIDEBOX_SOURCE}/${id}.jpg`, {
+        method: 'HEAD',
+        headers: { accept: 'image/jpeg,image/*;q=0.8,*/*;q=0.5' },
+        cache: 'no-store',
+        signal: AbortSignal.timeout(5000),
+      })
+      return {
+        id,
+        status: response.status,
+        ok: response.ok,
+        contentType: response.headers.get('content-type'),
+        contentLength: response.headers.get('content-length'),
       }
-    }))
-    results.push(...checked)
-  }
+    } catch (error) {
+      return { id, status: 0, ok: false, error: error?.name || 'fetch-error' }
+    }
+  }))
 
   const failures = results.filter((result) => !result.ok)
   return NextResponse.json({
