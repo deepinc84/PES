@@ -108,7 +108,7 @@ export function trustedMetadata(localMetadata, override) {
 
   return {
     ...localMetadata,
-    ...(typeof seo.title === 'string' ? { title: seo.title } : {}),
+    ...(typeof seo.title === 'string' ? { title: { absolute: seo.title } } : {}),
     ...(typeof seo.description === 'string' ? { description: seo.description } : {}),
     ...(typeof seo.canonical === 'string' ? { alternates: { ...(localMetadata?.alternates ?? {}), canonical: seo.canonical } } : {}),
     ...(seo.robots && typeof seo.robots === 'object' ? { robots: seo.robots } : typeof seo.robots === 'string' ? { robots: seo.robots } : {}),
