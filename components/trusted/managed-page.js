@@ -11,6 +11,13 @@ function safeHref(value, fallback = '/contact/') {
   return fallback
 }
 
+function safeImageSrc(value) {
+  if (typeof value !== 'string') return null
+  const trimmed = value.trim()
+  if (trimmed.startsWith('/') || trimmed.startsWith('https://') || trimmed.startsWith('http://')) return trimmed
+  return null
+}
+
 export function TrustedSection({ section }) {
   if (!section || typeof section !== 'object') return null
   const props = section.props && typeof section.props === 'object' ? section.props : {}
@@ -21,6 +28,12 @@ export function TrustedSection({ section }) {
 
     case 'content':
       return <section className="section wrap content-grid"><div><p className="eyebrow dark">{asText(props.eyebrow)}</p><h2>{asText(props.heading)}</h2>{Array.isArray(props.paragraphs) ? props.paragraphs.filter(p => typeof p === 'string').map((p, i) => <p key={i}>{p}</p>) : props.body ? <p>{asText(props.body)}</p> : null}</div></section>
+
+    case 'image': {
+      const src = safeImageSrc(props.url)
+      if (!src) return null
+      return <section className="section wrap"><figure style={{ margin: 0 }}><img src={src} alt={asText(props.alt)} loading="lazy" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: '1rem' }} />{props.caption ? <figcaption style={{ marginTop: '.75rem' }}>{asText(props.caption)}</figcaption> : null}</figure></section>
+    }
 
     case 'links': {
       const links = Array.isArray(props.links) ? props.links : []
@@ -98,6 +111,6 @@ export function trustedMetadata(localMetadata, override) {
     ...(typeof seo.title === 'string' ? { title: seo.title } : {}),
     ...(typeof seo.description === 'string' ? { description: seo.description } : {}),
     ...(typeof seo.canonical === 'string' ? { alternates: { ...(localMetadata?.alternates ?? {}), canonical: seo.canonical } } : {}),
-    ...(seo.robots && typeof seo.robots === 'object' ? { robots: seo.robots } : {}),
+    ...(seo.robots && typeof seo.robots === 'object' ? { robots: seo.robots } : typeof seo.robots === 'string' ? { robots: seo.robots } : {}),
   }
 }
