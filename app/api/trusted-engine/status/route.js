@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server'
-import { getTrustedSitePlan } from '@/lib/trusted-engine'
+import { getTrustedSitePlan, getTrustedSitemapState } from '@/lib/trusted-engine'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const result = await getTrustedSitePlan()
+  const [result, sitemap] = await Promise.all([
+    getTrustedSitePlan(),
+    getTrustedSitemapState(),
+  ])
 
   return NextResponse.json(
     {
@@ -21,6 +24,16 @@ export async function GET() {
           }
         : null,
       features: result.sitePlan?.features ?? null,
+      sitemap: {
+        ok: sitemap.ok,
+        active: sitemap.active,
+        status: sitemap.status,
+        error: sitemap.error,
+        entryCount: Array.isArray(sitemap.entries) ? sitemap.entries.length : 0,
+        sampleRoutes: Array.isArray(sitemap.entries)
+          ? sitemap.entries.slice(0, 10).map((entry) => entry.route)
+          : [],
+      },
     },
     {
       status: 200,
