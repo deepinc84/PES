@@ -1,5 +1,7 @@
 import './globals.css'
+import './project-engine.css'
 import { Footer, Header } from '@/components/site'
+import { getTrustedSitePlan } from '@/lib/trusted-engine'
 
 export const metadata = {
   metadataBase: new URL('https://pt-electrical.com'),
@@ -10,6 +12,8 @@ export const metadata = {
   openGraph: { type: 'website', locale: 'en_CA', siteName: 'Platinum Electrical Services', url: 'https://pt-electrical.com', title: 'Platinum Electrical Services', description: 'Residential, commercial and industrial electrical services in Calgary.' },
 }
 
-export default function RootLayout({ children }) {
-  return <html lang="en-CA"><body><Header /><main>{children}</main><Footer /></body></html>
+export default async function RootLayout({ children }) {
+  const trusted = await getTrustedSitePlan()
+  const navigation = trusted.ok ? trusted.sitePlan?.navigation ?? null : null
+  return <html lang="en-CA"><body><Header trustedNavigation={navigation} /><main>{children}</main><Footer trustedNavigation={navigation} /></body></html>
 }

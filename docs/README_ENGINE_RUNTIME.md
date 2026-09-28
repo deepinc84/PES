@@ -1,0 +1,1 @@
+Trusted Engine runtime notes for PES live in this directory. Production behavior remains native-first outside Engine-created routes and entitlement-driven integrations.

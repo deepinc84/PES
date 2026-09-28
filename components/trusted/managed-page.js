@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { PageHero } from '@/components/site'
+import { TrustedProjectIndexPage, TrustedProjectPage } from '@/components/trusted/project-pages'
+import { TrustedServiceAreaIndexPage, TrustedServiceAreaPage } from '@/components/trusted/service-area-pages'
 
 function asText(value, fallback = '') {
   return typeof value === 'string' ? value : fallback
@@ -61,25 +63,20 @@ function remoteEntry(section, fallbackIndex) {
 
 export function applyTrustedOperations(localSections, operations) {
   const sections = [...localSections]
-
   for (const [operationIndex, operation] of (Array.isArray(operations) ? operations : []).entries()) {
     if (!operation || typeof operation !== 'object') continue
     const targetIndex = sections.findIndex(section => section.id === operation.target)
     if (targetIndex < 0) continue
-
     if (operation.action === 'remove') {
       sections.splice(targetIndex, 1)
       continue
     }
-
     const entry = remoteEntry(operation.section, operationIndex)
     if (!entry) continue
-
     if (operation.action === 'replace') sections.splice(targetIndex, 1, entry)
     if (operation.action === 'insertBefore') sections.splice(targetIndex, 0, entry)
     if (operation.action === 'insertAfter') sections.splice(targetIndex + 1, 0, entry)
   }
-
   return sections
 }
 
@@ -94,6 +91,10 @@ export function TrustedManagedPage({ localSections = [], override }) {
   }
 
   if (override.mode === 'replace' || override.mode === 'create') {
+    if (override.page?.template === 'project') return <TrustedProjectPage page={override.page} />
+    if (override.page?.template === 'projectIndex') return <TrustedProjectIndexPage page={override.page} />
+    if (override.page?.template === 'serviceArea') return <TrustedServiceAreaPage page={override.page} />
+    if (override.page?.template === 'serviceAreaIndex') return <TrustedServiceAreaIndexPage page={override.page} />
     const sections = Array.isArray(override.page?.sections) ? override.page.sections : []
     return <>{sections.map((section, index) => <TrustedSection key={section?.id ?? `trusted-${index}`} section={section} />)}</>
   }
@@ -105,12 +106,29 @@ export function trustedMetadata(localMetadata, override) {
   if (!override?.active || (override.mode !== 'replace' && override.mode !== 'create' && override.mode !== 'partial')) return localMetadata
   const seo = override.page?.seo ?? override.seo
   if (!seo || typeof seo !== 'object') return localMetadata
+  const image = safeImageSrc(seo.image)
+  const title = typeof seo.title === 'string' ? seo.title : null
+  const description = typeof seo.description === 'string' ? seo.description : null
+  const canonical = typeof seo.canonical === 'string' ? seo.canonical : null
 
   return {
     ...localMetadata,
-    ...(typeof seo.title === 'string' ? { title: { absolute: seo.title } } : {}),
-    ...(typeof seo.description === 'string' ? { description: seo.description } : {}),
-    ...(typeof seo.canonical === 'string' ? { alternates: { ...(localMetadata?.alternates ?? {}), canonical: seo.canonical } } : {}),
+    ...(title ? { title: { absolute: title } } : {}),
+    ...(description ? { description } : {}),
+    ...(canonical ? { alternates: { ...(localMetadata?.alternates ?? {}), canonical } } : {}),
     ...(seo.robots && typeof seo.robots === 'object' ? { robots: seo.robots } : typeof seo.robots === 'string' ? { robots: seo.robots } : {}),
+    openGraph: {
+      ...(localMetadata?.openGraph ?? {}),
+      ...(title ? { title } : {}),
+      ...(description ? { description } : {}),
+      ...(canonical ? { url: canonical } : {}),
+      ...(image ? { images: [{ url: image }] } : {}),
+    },
+    twitter: {
+      ...(localMetadata?.twitter ?? {}),
+      ...(image ? { card: 'summary_large_image', images: [image] } : {}),
+      ...(title ? { title } : {}),
+      ...(description ? { description } : {}),
+    },
   }
 }

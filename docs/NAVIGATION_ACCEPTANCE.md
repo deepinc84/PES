@@ -1,0 +1,1 @@
+Projects and Service Areas links are considered accepted when they are supplied by Trusted Engine site-plan navigation, render in both PES header and footer while entitled, and disappear without a PES code change when the corresponding entitlement is disabled.
