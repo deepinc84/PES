@@ -109,16 +109,28 @@ export function trustedMetadata(localMetadata, override) {
   const seo = override.page?.seo ?? override.seo
   if (!seo || typeof seo !== 'object') return localMetadata
   const image = safeImageSrc(seo.image)
+  const title = typeof seo.title === 'string' ? seo.title : null
+  const description = typeof seo.description === 'string' ? seo.description : null
+  const canonical = typeof seo.canonical === 'string' ? seo.canonical : null
 
   return {
     ...localMetadata,
-    ...(typeof seo.title === 'string' ? { title: { absolute: seo.title } } : {}),
-    ...(typeof seo.description === 'string' ? { description: seo.description } : {}),
-    ...(typeof seo.canonical === 'string' ? { alternates: { ...(localMetadata?.alternates ?? {}), canonical: seo.canonical } } : {}),
+    ...(title ? { title: { absolute: title } } : {}),
+    ...(description ? { description } : {}),
+    ...(canonical ? { alternates: { ...(localMetadata?.alternates ?? {}), canonical } } : {}),
     ...(seo.robots && typeof seo.robots === 'object' ? { robots: seo.robots } : typeof seo.robots === 'string' ? { robots: seo.robots } : {}),
-    ...(image ? {
-      openGraph: { ...(localMetadata?.openGraph ?? {}), images: [{ url: image }] },
-      twitter: { ...(localMetadata?.twitter ?? {}), card: 'summary_large_image', images: [image] },
-    } : {}),
+    openGraph: {
+      ...(localMetadata?.openGraph ?? {}),
+      ...(title ? { title } : {}),
+      ...(description ? { description } : {}),
+      ...(canonical ? { url: canonical } : {}),
+      ...(image ? { images: [{ url: image }] } : {}),
+    },
+    twitter: {
+      ...(localMetadata?.twitter ?? {}),
+      ...(image ? { card: 'summary_large_image', images: [image] } : {}),
+      ...(title ? { title } : {}),
+      ...(description ? { description } : {}),
+    },
   }
 }
