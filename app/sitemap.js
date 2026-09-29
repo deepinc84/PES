@@ -6,9 +6,11 @@ const base = 'https://pt-electrical.com'
 function nativeEntries() {
   const routes = [
     '',
+    '/about-us/',
     '/our-services/',
     '/residential/',
     '/contact/',
+    '/what-you-need-to-know-about-electrical-generator-installation/',
     '/calgary-electrician/electrician-in-calgary/',
     '/electrician-services/24h-emergency-electrical-services/',
     ...Object.keys(servicePages).map((slug) => `/electrician-services/${slug}/`),
