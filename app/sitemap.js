@@ -10,6 +10,7 @@ function nativeEntries() {
     '/residential/',
     '/contact/',
     '/calgary-electrician/electrician-in-calgary/',
+    '/recommended-contractors/roofing-exteriors/',
     '/electrician-services/24h-emergency-electrical-services/',
     ...Object.keys(servicePages).map((slug) => `/electrician-services/${slug}/`),
   ]
