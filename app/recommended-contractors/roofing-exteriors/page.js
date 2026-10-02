@@ -1,21 +1,30 @@
 import Link from 'next/link'
 import { Breadcrumbs, Cta, PageHero } from '@/components/site'
 
+const pageTitle = 'Roofing & Exterior Contractor We Recommend in Calgary | Platinum Electrical Services'
+const pageDescription = 'Platinum Electrical Services recommends Trusted Roofing & Exteriors for roofing, siding, eavestrough, soffit and fascia work in the Calgary area.'
+const pageUrl = 'https://pt-electrical.com/recommended-contractors/roofing-exteriors/'
+
 export const metadata = {
-  title: 'Roofing & Exterior Contractor We Recommend in Calgary | Platinum Electrical Services',
-  description: 'Platinum Electrical Services recommends Trusted Roofing & Exteriors for roofing, siding, eavestrough, soffit and fascia work in the Calgary area.',
-  alternates: { canonical: '/recommended-contractors/roofing-exteriors/' },
+  title: { absolute: pageTitle },
+  description: pageDescription,
+  alternates: { canonical: pageUrl },
   openGraph: {
-    title: 'Roofing & Exterior Contractor We Recommend in Calgary | Platinum Electrical Services',
+    title: pageTitle,
     description: 'A Calgary roofing and exterior contractor we recommend when a project extends beyond electrical work.',
-    url: 'https://pt-electrical.com/recommended-contractors/roofing-exteriors/',
+    url: pageUrl,
     type: 'article',
+  },
+  twitter: {
+    card: 'summary',
+    title: pageTitle,
+    description: 'A Calgary roofing and exterior contractor we recommend when a project extends beyond electrical work.',
   },
 }
 
 export default function RoofingExteriorsRecommendation() {
   return <>
-    <Breadcrumbs items={[{ label: 'Recommended contractors', href: '/recommended-contractors/roofing-exteriors/' }, { label: 'Roofing & exteriors' }]} />
+    <Breadcrumbs items={[{ label: 'Roofing & exteriors' }]} />
     <PageHero eyebrow="Recommended local contractor" title="A roofing & exterior contractor we recommend in Calgary">
       Electrical projects sometimes overlap with roofing and exterior work. When the scope moves beyond electrical, we prefer to point customers toward a contractor that works specifically in those systems.
     </PageHero>
