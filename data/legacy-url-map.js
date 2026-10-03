@@ -45,9 +45,10 @@ const explicitRedirects = [
   redirect('/electrician-services/mechanical-electrical-maintenance/', '/electrician-services/industrial-mechanics/', 'service-consolidation', 'Industrial electrical/mechanical maintenance is consolidated.'),
   redirect('/electrician-services/mechanical-maintenance/', '/electrician-services/industrial-mechanics/', 'service-consolidation', 'Mechanical maintenance is consolidated into industrial mechanics.'),
   redirect('/electrician-services/mechanical-repairs/', '/electrician-services/industrial-mechanics/', 'service-consolidation', 'Mechanical repair is consolidated into industrial mechanics.'),
-  redirect('/electrician-services/medical-equipment-repair/', '/electrician-services/industrial-mechanics/', 'service-consolidation', 'Specialized equipment repair maps to the closest equipment-support service.'),
+  redirect('/electrician-services/medical-equipment-repair/', '/electrician-services/industrial-mechanics/', 'service-consolidation', 'Specialized equipment repair maps to the closest equipment-support capability.'),
   redirect('/electrician-services/thermography/', '/electrician-services/ir-thermography-inspections/', 'legacy-duplicate', 'Duplicate thermography topic.'),
   redirect('/5-signs-you-need-to-call-an-electrician-this-winter/', '/residential/', 'old-blog-article', 'Unrecovered winter safety article maps to residential electrical services.'),
+  redirect('/when-is-it-time-to-call-an-electrician/', '/residential/', 'old-blog-article', 'Backlinked historical electrician advice article transfers to residential electrical services.'),
   redirect('/5-ways-to-conserve-electricity-in-the-city-of-calgary-during-winter/', '/electrician-services/lighting/', 'old-blog-article', 'Unrecovered conservation article maps to energy-efficient lighting services.'),
   redirect('/6-important-benefits-electrical-maintenance-does-for-your-business/', '/electrician-services/electrical-maintenance/', 'old-blog-article', 'Unrecovered business maintenance article maps to electrical maintenance.'),
 ]
