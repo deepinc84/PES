@@ -17,6 +17,7 @@ const protectedPages = [
   rebuild('/calgary-electrician/electrician-in-calgary/', 'protected-historical-page', 'Historical Calgary electrician landing page retained.'),
   rebuild('/electrician-services/24h-emergency-electrical-services/', 'protected-historical-page', 'Historical emergency service route retained.'),
   rebuild('/contact/', 'protected-historical-page', 'Canonical contact route.'),
+  rebuild('/what-you-need-to-know-about-electrical-generator-installation/', 'protected-historical-article', 'Historical generator-installation article recovered at its original URL.'),
 ]
 
 const rebuiltServiceSlugs = [
@@ -33,6 +34,12 @@ const rebuiltServices = rebuiltServiceSlugs.map(slug => rebuild(
 
 const explicitRedirects = [
   redirect('/contact-us/', '/contact/', 'legacy-page', 'Legacy contact page alias.'),
+  redirect('/services/', '/our-services/', 'legacy-page', 'Historical services alias maps to the canonical services hub.'),
+  redirect('/author/sa-admin/', '/about-us/', 'wordpress-author-archive', 'Retired WordPress author archive maps to company information.'),
+  redirect('/contact-form-thank-you.html', '/contact/', 'legacy-form-page', 'Retired form confirmation page maps to the canonical contact page.'),
+  redirect('/feed/', '/', 'wordpress-feed', 'Retired site-wide WordPress feed maps to the primary site route.'),
+  redirect('/comments/feed/', '/', 'wordpress-feed', 'Retired WordPress comments feed maps to the primary site route.'),
+  redirect('/what-you-need-to-know-about-electrical-generator-installation/feed/', '/what-you-need-to-know-about-electrical-generator-installation/', 'wordpress-feed', 'Article feed maps directly to the recovered canonical article.'),
   redirect('/electrician-services/', '/our-services/', 'legacy-service-hub', 'One canonical service hub avoids duplicate indexes.'),
   redirect('/calgary-electrician/electrician-in-calgary-2/', '/calgary-electrician/electrician-in-calgary/', 'legacy-duplicate', 'Numbered duplicate of the canonical Calgary page.'),
   redirect('/calgary-electrician/electrician-near-me-2/', '/calgary-electrician/electrician-in-calgary/', 'legacy-duplicate', 'Old local landing page consolidated into the canonical Calgary page.'),
