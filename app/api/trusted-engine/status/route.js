@@ -5,8 +5,8 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   const [result, sitemap] = await Promise.all([
-    getTrustedSitePlan(),
-    getTrustedSitemapState(),
+    getTrustedSitePlan({ fresh: true }),
+    getTrustedSitemapState({ fresh: true }),
   ])
 
   return NextResponse.json(
