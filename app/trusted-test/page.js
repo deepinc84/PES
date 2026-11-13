@@ -19,7 +19,7 @@ const featureLabels = {
 }
 
 export default async function TrustedTestPage() {
-  const trusted = await getTrustedSitePlan()
+  const trusted = await getTrustedSitePlan({ fresh: true })
   const plan = trusted.sitePlan
 
   return <section className="diagnostic-section">
