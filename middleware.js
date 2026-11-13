@@ -1,10 +1,19 @@
 import { NextResponse } from 'next/server'
-import { resolveTrustedEdgeRoute } from './lib/trusted-engine-edge'
+import { resolveTrustedEdgeRoute, normalizeTrustedEdgePath } from './lib/trusted-engine-edge'
+
+// Public PES is parked. Create/partial pages resolve inside Next.js; only
+// active replace/redirect routes need Edge ownership checks right now.
+// Switch PES_ENGINE_FULL_ROUTING=true when Core30 enables dynamic routes.
+const PARKED_ENGINE_EDGE_ROUTES = new Set(['/trusted-test'])
 
 export async function middleware(request) {
   if (request.method !== 'GET' && request.method !== 'HEAD') return NextResponse.next()
 
   const pathname = request.nextUrl.pathname
+  if (process.env.PES_ENGINE_FULL_ROUTING !== 'true' &&
+      !PARKED_ENGINE_EDGE_ROUTES.has(normalizeTrustedEdgePath(pathname))) {
+    return NextResponse.next()
+  }
   const decision = await resolveTrustedEdgeRoute(pathname)
 
   // Fail closed to the native PES application whenever Engine is unavailable,
